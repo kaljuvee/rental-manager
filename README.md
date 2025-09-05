@@ -7,8 +7,12 @@ This project is a clone of the Rentster.eu rental management platform, built wit
 - `streamlit_app/`: Contains the Streamlit backend application.
   - `Home.py`: The main application file.
   - `pages/`: Additional pages for the Streamlit app.
+  - `requirements.txt`: Streamlit-specific dependencies.
   - `rentster.db`: The SQLite database file.
 - `fasthtml_landing/`: Contains the FastHTML landing page.
+  - `app.py`: FastHTML application file.
+  - `requirements.txt`: FastHTML-specific dependencies.
+- `business_analysis.md`: Comprehensive business logic analysis.
 - `rentster_analysis.md`: Analysis of the original Rentster.eu website.
 - `data_model.md`: Data model and database schema.
 
@@ -22,24 +26,30 @@ This project is a clone of the Rentster.eu rental management platform, built wit
     cd rental-manager
     ```
 
-2.  Install all dependencies:
+### Backend (Streamlit)
+
+1.  Install Streamlit dependencies:
     ```bash
+    cd streamlit_app
     pip install -r requirements.txt
     ```
 
-### Backend (Streamlit)
-
-1.  Run the Streamlit application:
+2.  Run the Streamlit application:
     ```bash
-    streamlit run streamlit_app/Home.py
+    streamlit run Home.py
     ```
     Access at: http://localhost:8501
 
 ### Frontend (FastHTML)
 
-1.  Run the FastHTML application:
+1.  Install FastHTML dependencies:
     ```bash
     cd fasthtml_landing
+    pip install -r requirements.txt
+    ```
+
+2.  Run the FastHTML application:
+    ```bash
     python app.py
     ```
     Access at: http://localhost:5001

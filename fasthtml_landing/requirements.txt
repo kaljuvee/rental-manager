@@ -1,0 +1,11 @@
+# FastHTML Landing Page Requirements
+python-fasthtml>=0.12.25
+uvicorn>=0.21.0
+starlette>=0.28.0
+
+# Additional utilities
+python-multipart>=0.0.20
+watchfiles>=1.1.0
+websockets>=15.0.0
+httpx>=0.28.0
+
