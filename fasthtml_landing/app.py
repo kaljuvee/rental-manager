@@ -1,387 +1,252 @@
 from fasthtml.common import *
 
-# Create FastHTML app
 app, rt = fast_app()
 
-# Streamlit backend URL
-STREAMLIT_URL = "https://rental-manager.streamlit.app"
+def create_header():
+    return Nav(
+        Div(
+            A(
+                Img(src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23667eea'%3E%3Cpath d='M12 2L2 7v10c0 5.55 3.84 10 9 11 1.09.2 2.91.2 4 0 5.16-1 9-5.45 9-11V7l-10-5z'/%3E%3C/svg%3E", 
+                     alt="Rental Manager", style="width: 32px; height: 32px;"),
+                Span("Rental Manager", style="font-size: 20px; font-weight: bold; color: #1f2937; margin-left: 8px;"),
+                href="/", style="display: flex; align-items: center; text-decoration: none;"
+            ),
+            style="display: flex; align-items: center;"
+        ),
+        Div(
+            A("Features", href="#features", style="color: #6b7280; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: all 0.2s;"),
+            A("About", href="#about", style="color: #6b7280; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: all 0.2s;"),
+            A("Contact", href="#contact", style="color: #6b7280; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: all 0.2s;"),
+            style="display: flex; gap: 8px; align-items: center;"
+        ),
+        Div(
+            A("Get Started", href="https://rental-manager.streamlit.app/", 
+              style="background: #667eea; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 500; transition: all 0.2s;"),
+            style="display: flex; align-items: center;"
+        ),
+        style="display: flex; justify-content: space-between; align-items: center; padding: 16px 32px; background: white; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 50;"
+    )
 
-# CSS styles
-css = Style("""
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+def create_hero():
+    return Section(
+        Div(
+            Div(
+                H1("All-in-One", style="font-size: 4rem; font-weight: bold; color: #1f2937; margin-bottom: 16px; line-height: 1.1;"),
+                H1(
+                    Span("Smart assistant", style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"),
+                    " for rental managers",
+                    style="font-size: 4rem; font-weight: bold; color: #1f2937; margin-bottom: 24px; line-height: 1.1;"
+                ),
+                P("Streamline your rental business with AI-powered automation, smart analytics, and seamless property management tools.", 
+                  style="font-size: 1.25rem; color: #6b7280; margin-bottom: 32px; max-width: 600px; line-height: 1.6;"),
+                Div(
+                    A("Start Managing", href="https://rental-manager.streamlit.app/", 
+                      style="background: #1f2937; color: white; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.1rem; margin-right: 16px; display: inline-block; transition: all 0.2s;"),
+                    A("View Demo", href="#demo", 
+                      style="background: transparent; color: #667eea; padding: 16px 32px; border: 2px solid #667eea; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.1rem; display: inline-block; transition: all 0.2s;"),
+                    style="margin-top: 16px;"
+                ),
+                style="text-align: center; max-width: 800px; margin: 0 auto;"
+            ),
+            style="padding: 80px 32px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); min-height: 600px; display: flex; align-items: center; justify-content: center;"
+        ),
+        id="hero"
+    )
 
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        line-height: 1.6;
-        color: #333;
-    }
-
-    .header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 1rem 0;
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 1000;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    .nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 2rem;
-    }
-
-    .logo {
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
-
-    .nav-links {
-        display: flex;
-        list-style: none;
-        gap: 2rem;
-    }
-
-    .nav-links a {
-        color: white;
-        text-decoration: none;
-        transition: opacity 0.3s;
-    }
-
-    .nav-links a:hover {
-        opacity: 0.8;
-    }
-
-    .auth-buttons {
-        display: flex;
-        gap: 1rem;
-    }
-
-    .btn {
-        padding: 0.5rem 1rem;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        text-decoration: none;
-        transition: all 0.3s;
-        font-weight: 500;
-        display: inline-block;
-    }
-
-    .btn-outline {
-        background: transparent;
-        color: white;
-        border: 2px solid white;
-    }
-
-    .btn-outline:hover {
-        background: white;
-        color: #667eea;
-    }
-
-    .btn-primary {
-        background: #4CAF50;
-        color: white;
-    }
-
-    .btn-primary:hover {
-        background: #45a049;
-        transform: translateY(-2px);
-    }
-
-    .hero {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 8rem 2rem 4rem;
-        text-align: center;
-        margin-top: 60px;
-    }
-
-    .hero-content {
-        max-width: 800px;
-        margin: 0 auto;
-    }
-
-    .hero h1 {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        font-weight: 700;
-    }
-
-    .hero p {
-        font-size: 1.2rem;
-        margin-bottom: 2rem;
-        opacity: 0.9;
-    }
-
-    .features {
-        padding: 4rem 2rem;
-        background: #f8f9fa;
-    }
-
-    .features-container {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .features h2 {
-        text-align: center;
-        margin-bottom: 3rem;
-        font-size: 2.5rem;
-        color: #333;
-    }
-
-    .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-    }
-
-    .feature-card {
-        background: white;
-        padding: 2rem;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        transition: transform 0.3s;
-    }
-
-    .feature-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .feature-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        color: #667eea;
-    }
-
-    .feature-card h3 {
-        margin-bottom: 1rem;
-        color: #333;
-    }
-
-    .pricing {
-        padding: 4rem 2rem;
-        background: white;
-    }
-
-    .pricing-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        text-align: center;
-    }
-
-    .pricing h2 {
-        margin-bottom: 3rem;
-        font-size: 2.5rem;
-        color: #333;
-    }
-
-    .pricing-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        margin-top: 2rem;
-    }
-
-    .pricing-card {
-        background: white;
-        border: 2px solid #e9ecef;
-        border-radius: 10px;
-        padding: 2rem;
-        transition: all 0.3s;
-    }
-
-    .pricing-card:hover {
-        border-color: #667eea;
-        transform: translateY(-5px);
-    }
-
-    .pricing-card.featured {
-        border-color: #667eea;
-        transform: scale(1.05);
-    }
-
-    .price {
-        font-size: 3rem;
-        font-weight: bold;
-        color: #667eea;
-        margin: 1rem 0;
-    }
-
-    .footer {
-        background: #333;
-        color: white;
-        padding: 2rem;
-        text-align: center;
-    }
-
-    @media (max-width: 768px) {
-        .nav {
-            flex-direction: column;
-            gap: 1rem;
+def create_features():
+    features = [
+        {
+            "icon": "🏠",
+            "title": "Smart Property Management",
+            "description": "Automated booking management, calendar synchronization, and intelligent pricing optimization for maximum revenue."
+        },
+        {
+            "icon": "📊",
+            "title": "Advanced Analytics",
+            "description": "Real-time insights into your rental performance, revenue trends, and customer behavior patterns."
+        },
+        {
+            "icon": "🤖",
+            "title": "AI-Powered Automation",
+            "description": "Intelligent task management, automated communications, and smart maintenance scheduling."
+        },
+        {
+            "icon": "📱",
+            "title": "Mobile-First Design",
+            "description": "Manage your rentals on-the-go with our responsive web application accessible from any device."
+        },
+        {
+            "icon": "💰",
+            "title": "Revenue Optimization",
+            "description": "Dynamic pricing suggestions, occupancy rate optimization, and profit margin analysis."
+        },
+        {
+            "icon": "🔒",
+            "title": "Secure & Reliable",
+            "description": "Enterprise-grade security with encrypted data storage and reliable cloud infrastructure."
         }
-        
-        .hero h1 {
-            font-size: 2rem;
-        }
-        
-        .nav-links {
-            flex-direction: column;
-            gap: 1rem;
-        }
-    }
-""")
+    ]
+    
+    return Section(
+        Div(
+            H2("Everything you need to manage rentals", 
+               style="font-size: 2.5rem; font-weight: bold; color: #1f2937; text-align: center; margin-bottom: 16px;"),
+            P("Professional-grade tools designed for modern rental managers", 
+              style="font-size: 1.2rem; color: #6b7280; text-align: center; margin-bottom: 64px; max-width: 600px; margin-left: auto; margin-right: auto;"),
+            Div(
+                *[
+                    Div(
+                        Div(feature["icon"], style="font-size: 3rem; margin-bottom: 16px;"),
+                        H3(feature["title"], style="font-size: 1.5rem; font-weight: bold; color: #1f2937; margin-bottom: 12px;"),
+                        P(feature["description"], style="color: #6b7280; line-height: 1.6;"),
+                        style="background: white; padding: 32px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); text-align: center; transition: all 0.3s;"
+                    ) for feature in features
+                ],
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;"
+            ),
+            style="padding: 80px 32px; max-width: 1200px; margin: 0 auto;"
+        ),
+        id="features"
+    )
 
-app, rt = fast_app(hdrs=[css])
+def create_categories():
+    categories = [
+        {
+            "title": "Property Management",
+            "icon": "🏢",
+            "color": "#667eea",
+            "features": ["Multi-property dashboard", "Automated bookings", "Calendar sync", "Guest communications"]
+        },
+        {
+            "title": "Analytics & Insights",
+            "icon": "📈",
+            "color": "#764ba2", 
+            "features": ["Revenue tracking", "Performance metrics", "Occupancy rates", "Profit analysis"]
+        },
+        {
+            "title": "Automation Tools",
+            "icon": "⚡",
+            "color": "#f093fb",
+            "features": ["Smart scheduling", "Auto-responses", "Task management", "Maintenance alerts"]
+        }
+    ]
+    
+    return Section(
+        Div(
+            H2("Comprehensive rental management platform", 
+               style="font-size: 2.5rem; font-weight: bold; color: #1f2937; text-align: center; margin-bottom: 64px;"),
+            Div(
+                *[
+                    Div(
+                        Div(
+                            Div(cat["icon"], style=f"font-size: 3rem; color: {cat['color']}; margin-bottom: 16px;"),
+                            H3(cat["title"], style="font-size: 1.8rem; font-weight: bold; color: #1f2937; margin-bottom: 20px;"),
+                            Ul(
+                                *[Li(feature, style="color: #6b7280; margin-bottom: 8px; list-style: none; position: relative; padding-left: 20px;") for feature in cat["features"]],
+                                style="padding: 0;"
+                            ),
+                            style="text-align: center;"
+                        ),
+                        style=f"background: linear-gradient(135deg, {cat['color']}15 0%, {cat['color']}05 100%); padding: 40px; border-radius: 20px; border: 2px solid {cat['color']}20; transition: all 0.3s;"
+                    ) for cat in categories
+                ],
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 32px;"
+            ),
+            style="padding: 80px 32px; max-width: 1200px; margin: 0 auto;"
+        ),
+        id="categories"
+    )
+
+def create_cta():
+    return Section(
+        Div(
+            Div(
+                H2("Ready to transform your rental business?", 
+                   style="font-size: 2.5rem; font-weight: bold; color: white; margin-bottom: 16px; text-align: center;"),
+                P("Join thousands of property managers who trust Rental Manager for their business success.", 
+                  style="font-size: 1.2rem; color: rgba(255,255,255,0.9); margin-bottom: 32px; text-align: center; max-width: 600px; margin-left: auto; margin-right: auto;"),
+                Div(
+                    A("Get Started Now", href="https://rental-manager.streamlit.app/", 
+                      style="background: white; color: #667eea; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.1rem; margin-right: 16px; display: inline-block; transition: all 0.2s;"),
+                    style="text-align: center;"
+                ),
+                style="max-width: 800px; margin: 0 auto;"
+            ),
+            style="padding: 80px 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); text-align: center;"
+        ),
+        id="cta"
+    )
+
+def create_footer():
+    return Footer(
+        Div(
+            Div(
+                Div(
+                    H4("Rental Manager", style="font-size: 1.2rem; font-weight: bold; color: #1f2937; margin-bottom: 16px;"),
+                    P("Smart rental management platform for modern property managers.", 
+                      style="color: #6b7280; line-height: 1.6; max-width: 300px;"),
+                    style="flex: 1;"
+                ),
+                Div(
+                    H4("Platform", style="font-size: 1.1rem; font-weight: bold; color: #1f2937; margin-bottom: 16px;"),
+                    Div(
+                        A("Dashboard", href="https://rental-manager.streamlit.app/", style="color: #6b7280; text-decoration: none; display: block; margin-bottom: 8px;"),
+                        A("Analytics", href="https://rental-manager.streamlit.app/Analytics", style="color: #6b7280; text-decoration: none; display: block; margin-bottom: 8px;"),
+                        A("Calendar", href="https://rental-manager.streamlit.app/Calendar", style="color: #6b7280; text-decoration: none; display: block; margin-bottom: 8px;"),
+                    ),
+                    style="flex: 1;"
+                ),
+                Div(
+                    H4("Resources", style="font-size: 1.1rem; font-weight: bold; color: #1f2937; margin-bottom: 16px;"),
+                    Div(
+                        A("Documentation", href="#", style="color: #6b7280; text-decoration: none; display: block; margin-bottom: 8px;"),
+                        A("Support", href="#", style="color: #6b7280; text-decoration: none; display: block; margin-bottom: 8px;"),
+                        A("GitHub", href="https://github.com/kaljuvee/rental-manager", style="color: #6b7280; text-decoration: none; display: block; margin-bottom: 8px;"),
+                    ),
+                    style="flex: 1;"
+                ),
+                style="display: flex; gap: 64px; flex-wrap: wrap;"
+            ),
+            Hr(style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;"),
+            Div(
+                P("© 2025 Rental Manager. All rights reserved.", style="color: #6b7280; margin: 0;"),
+                style="text-align: center;"
+            ),
+            style="padding: 40px 32px; max-width: 1200px; margin: 0 auto;"
+        ),
+        style="background: #f9fafb; border-top: 1px solid #e5e7eb;"
+    )
 
 @rt("/")
 def get():
-    return Title("Rental Manager - Rental Management Platform"), \
-        Header(
-            Nav(
-                Div("Rental Manager", cls="logo"),
-                Ul(
-                    Li(A("Home", href="#")),
-                    Li(A("Features", href="#features")),
-                    Li(A("Pricing", href="#pricing")),
-                    Li(A("Contact", href="#contact")),
-                    cls="nav-links"
-                ),
-                Div(
-                A("Login", href=f"{STREAMLIT_URL}", target="_blank", cls="btn"),
-                A("Sign Up", href=f"{STREAMLIT_URL}", target="_blank", cls="btn btn-primary"),
-                    cls="auth-buttons"
-                ),
-                cls="nav"
-            ),
-            cls="header"
-        ), \
-        Section(
-            Div(
-                H1("Rental Management Platform"),
-                P("Comprehensive rental management solution with digital calendar, order processing, digital signatures, online payments, and contactless rental capabilities."),
-                A("Get Started", href=f"{STREAMLIT_URL}", target="_blank", cls="btn btn-primary", style="font-size: 1.1rem; padding: 1rem 2rem;"),
-                cls="hero-content"
-            ),
-            cls="hero"
-        ), \
-        Section(
-            Div(
-                H2("Core Features"),
-                Div(
-                    Div(
-                        Div("📅", cls="feature-icon"),
-                        H3("Synchronized Online Calendar"),
-                        P("Integrate with home calendar, phone, Outlook, Mac, or Google Calendar for seamless scheduling."),
-                        cls="feature-card"
-                    ),
-                    Div(
-                        Div("💳", cls="feature-icon"),
-                        H3("Payment Links"),
-                        P("Integrated payment service for smooth and secure payment experiences without third-party redirects."),
-                        cls="feature-card"
-                    ),
-                    Div(
-                        Div("🌐", cls="feature-icon"),
-                        H3("Free Website Platform"),
-                        P("Complete rental platform with domain connection for effortless rental management."),
-                        cls="feature-card"
-                    ),
-                    Div(
-                        Div("✍️", cls="feature-icon"),
-                        H3("Digital Signatures"),
-                        P("EU-legally binding document signing with automated digital solutions."),
-                        cls="feature-card"
-                    ),
-                    Div(
-                        Div("🔐", cls="feature-icon"),
-                        H3("Access Management"),
-                        P("Integrate rental spaces, parcel machines, and warehouses with smart access control."),
-                        cls="feature-card"
-                    ),
-                    Div(
-                        Div("📦", cls="feature-icon"),
-                        H3("Parcel Machine Integration"),
-                        P("Seamless rental delivery and return through integrated parcel machine network."),
-                        cls="feature-card"
-                    ),
-                    cls="features-grid"
-                ),
-                cls="features-container"
-            ),
-            cls="features",
-            id="features"
-        ), \
-        Section(
-            Div(
-                H2("Choose Your Plan"),
-                Div(
-                    Div(
-                        H3("Free Plan"),
-                        Div("€0", cls="price"),
-                        P("per month"),
-                        Ul(
-                            Li("1 User / 1 Account"),
-                            Li("Rental Management"),
-                            Li("Digital Signatures"),
-                            Li("9% Transaction Fee"),
-                            style="text-align: left; margin: 1rem 0;"
-                        ),
-                        A("Get Started", href="#", cls="btn btn-outline"),
-                        cls="pricing-card"
-                    ),
-                    Div(
-                        H3("Business Plan"),
-                        Div("€59", cls="price"),
-                        P("per month (annual billing)"),
-                        Ul(
-                            Li("All Free Plan Features"),
-                            Li("Max 10 Users"),
-                            Li("Max 5 Locations"),
-                            Li("API Integrations"),
-                            Li("0% Transaction Fee"),
-                            style="text-align: left; margin: 1rem 0;"
-                        ),
-                        A("Choose Plan", href="#", cls="btn btn-primary"),
-                        cls="pricing-card featured"
-                    ),
-                    Div(
-                        H3("Premium Plan"),
-                        Div("€99", cls="price"),
-                        P("per month (annual billing)"),
-                        Ul(
-                            Li("All Business Plan Features"),
-                            Li("Max 100 Users"),
-                            Li("Max 50 Locations"),
-                            Li("Advanced API Access"),
-                            Li("Full Service Support"),
-                            style="text-align: left; margin: 1rem 0;"
-                        ),
-                        A("Choose Plan", href="#", cls="btn btn-outline"),
-                        cls="pricing-card"
-                    ),
-                    cls="pricing-grid"
-                ),
-                cls="pricing-container"
-            ),
-            cls="pricing",
-            id="pricing"
-        ), \
-        Footer(
-            P("© 2024 Rental Manager. All rights reserved."),
-            cls="footer",
-            id="contact"
+    return Html(
+        Head(
+            Title("Rental Manager - Smart Rental Management Platform"),
+            Meta(name="viewport", content="width=device-width, initial-scale=1"),
+            Meta(name="description", content="All-in-one smart assistant for rental managers. Streamline your rental business with AI-powered automation and analytics."),
+            Style("""
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+                body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1f2937; }
+                a:hover { opacity: 0.8; }
+                .feature-item::before { content: '✓'; color: #10b981; font-weight: bold; position: absolute; left: 0; }
+                @media (max-width: 768px) {
+                    h1 { font-size: 2.5rem !important; }
+                    .hero { padding: 40px 16px !important; }
+                    .section { padding: 40px 16px !important; }
+                    .grid { grid-template-columns: 1fr !important; }
+                }
+            """)
+        ),
+        Body(
+            create_header(),
+            create_hero(),
+            create_features(),
+            create_categories(),
+            create_cta(),
+            create_footer()
         )
+    )
 
-serve()
+if __name__ == "__main__":
+    serve()
 
