@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental Manager - Smart Rental Management Platform</title>
+    <meta name="description" content="All-in-one smart assistant for rental managers. Streamline your rental business with AI-powered automation and analytics.">
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            line-height: 1.6; 
+            color: #1f2937; 
+        }
+        
+        a:hover { 
+            opacity: 0.8; 
+        }
+        
+        .feature-item::before { 
+            content: '✓'; 
+            color: #10b981; 
+            font-weight: bold; 
+            position: absolute; 
+            left: 0; 
+        }
+        
+        @media (max-width: 768px) {
+            h1 { 
+                font-size: 2.5rem !important; 
+            }
+            .hero { 
+                padding: 40px 16px !important; 
+            }
+            .section { 
+                padding: 40px 16px !important; 
+            }
+            .grid { 
+                grid-template-columns: 1fr !important; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <nav style="display: flex; justify-content: space-between; align-items: center; padding: 16px 32px; background: white; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 50;">
+        <div style="display: flex; align-items: center;">
+            <a href="/" style="display: flex; align-items: center; text-decoration: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#667eea" style="width: 32px; height: 32px;">
+                    <path d="M12 2L2 7v10c0 5.55 3.84 10 9 11 1.09.2 2.91.2 4 0 5.16-1 9-5.45 9-11V7l-10-5z"/>
+                </svg>
+                <span style="font-size: 20px; font-weight: bold; color: #1f2937; margin-left: 8px;">Rental Manager</span>
+            </a>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+            <a href="#features" style="color: #6b7280; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: all 0.2s;">Features</a>
+            <a href="#about" style="color: #6b7280; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: all 0.2s;">About</a>
+            <a href="#contact" style="color: #6b7280; text-decoration: none; padding: 8px 16px; border-radius: 6px; transition: all 0.2s;">Contact</a>
+        </div>
+        <div style="display: flex; align-items: center;">
+            <a href="https://rental-manager.streamlit.app/" style="background: #667eea; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 500; transition: all 0.2s;">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div style="padding: 80px 32px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); min-height: 600px; display: flex; align-items: center; justify-content: center;">
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <h1 style="font-size: 4rem; font-weight: bold; color: #1f2937; margin-bottom: 16px; line-height: 1.1;">All-in-One</h1>
+                <h1 style="font-size: 4rem; font-weight: bold; color: #1f2937; margin-bottom: 24px; line-height: 1.1;">
+                    <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Smart assistant</span>
+                    for rental managers
+                </h1>
+                <p style="font-size: 1.25rem; color: #6b7280; margin-bottom: 32px; max-width: 600px; line-height: 1.6;">
+                    Streamline your rental business with AI-powered automation, smart analytics, and seamless property management tools.
+                </p>
+                <div style="margin-top: 16px;">
+                    <a href="https://rental-manager.streamlit.app/" style="background: #1f2937; color: white; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.1rem; margin-right: 16px; display: inline-block; transition: all 0.2s;">Start Managing</a>
+                    <a href="#demo" style="background: transparent; color: #667eea; padding: 16px 32px; border: 2px solid #667eea; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.1rem; display: inline-block; transition: all 0.2s;">View Demo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <div style="padding: 80px 32px; max-width: 1200px; margin: 0 auto;">
+            <h2 style="font-size: 2.5rem; font-weight: bold; color: #1f2937; text-align: center; margin-bottom: 16px;">Everything you need to manage rentals</h2>
+            <p style="font-size: 1.2rem; color: #6b7280; text-align: center; margin-bottom: 64px; max-width: 600px; margin-left: auto; margin-right: auto;">Professional-grade tools designed for modern rental managers</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;">
+                <div style="background: white; padding: 32px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); text-align: center; transition: all 0.3s;">
+                    <div style="font-size: 3rem; margin-bottom: 16px;">🏠</div>
+                    <h3 style="font-size: 1.5rem; font-weight: bold; color: #1f2937; margin-bottom: 12px;">Smart Property Management</h3>
+                    <p style="color: #6b7280; line-height: 1.6;">Automated booking management, calendar synchronization, and intelligent pricing optimization for maximum revenue.</p>
+                </div>
+                
+                <div style="background: white; padding: 32px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); text-align: center; transition: all 0.3s;">
+                    <div style="font-size: 3rem; margin-bottom: 16px;">📊</div>
+                    <h3 style="font-size: 1.5rem; font-weight: bold; color: #1f2937; margin-bottom: 12px;">Advanced Analytics</h3>
+                    <p style="color: #6b7280; line-height: 1.6;">Real-time insights into your rental performance, revenue trends, and customer behavior patterns.</p>
+                </div>
+                
+                <div style="background: white; padding: 32px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); text-align: center; transition: all 0.3s;">
+                    <div style="font-size: 3rem; margin-bottom: 16px;">🤖</div>
+                    <h3 style="font-size: 1.5rem; font-weight: bold; color: #1f2937; margin-bottom: 12px;">AI-Powered Automation</h3>
+                    <p style="color: #6b7280; line-height: 1.6;">Intelligent task management, automated communications, and smart maintenance scheduling.</p>
+                </div>
+                
+                <div style="background: white; padding: 32px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); text-align: center; transition: all 0.3s;">
+                    <div style="font-size: 3rem; margin-bottom: 16px;">📱</div>
+                    <h3 style="font-size: 1.5rem; font-weight: bold; color: #1f2937; margin-bottom: 12px;">Mobile-First Design</h3>
+                    <p style="color: #6b7280; line-height: 1.6;">Manage your rentals on-the-go with our responsive web application accessible from any device.</p>
+                </div>
+                
+                <div style="background: white; padding: 32px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); text-align: center; transition: all 0.3s;">
+                    <div style="font-size: 3rem; margin-bottom: 16px;">💰</div>
+                    <h3 style="font-size: 1.5rem; font-weight: bold; color: #1f2937; margin-bottom: 12px;">Revenue Optimization</h3>
+                    <p style="color: #6b7280; line-height: 1.6;">Dynamic pricing suggestions, occupancy rate optimization, and profit margin analysis.</p>
+                </div>
+                
+                <div style="background: white; padding: 32px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); text-align: center; transition: all 0.3s;">
+                    <div style="font-size: 3rem; margin-bottom: 16px;">🔒</div>
+                    <h3 style="font-size: 1.5rem; font-weight: bold; color: #1f2937; margin-bottom: 12px;">Secure & Reliable</h3>
+                    <p style="color: #6b7280; line-height: 1.6;">Enterprise-grade security with encrypted data storage and reliable cloud infrastructure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories">
+        <div style="padding: 80px 32px; max-width: 1200px; margin: 0 auto;">
+            <h2 style="font-size: 2.5rem; font-weight: bold; color: #1f2937; text-align: center; margin-bottom: 64px;">Comprehensive rental management platform</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 32px;">
+                <div style="background: linear-gradient(135deg, #667eea15 0%, #667eea05 100%); padding: 40px; border-radius: 20px; border: 2px solid #667eea20; transition: all 0.3s;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; color: #667eea; margin-bottom: 16px;">🏢</div>
+                        <h3 style="font-size: 1.8rem; font-weight: bold; color: #1f2937; margin-bottom: 20px;">Property Management</h3>
+                        <ul style="padding: 0;">
+                            <li style="color: #6b7280; margin-bottom: 8px; list-style: none; position: relative; padding-left: 20px;">Multi-property dashboard</li>
+                            <li style="color: #6b7280; margin-bottom: 8px; list-style: none; position: relative; padding-left: 20px;">Automated bookings</li>
+                            <li style="color: #6b7280; margin-bottom: 8px; list-style: none; position: relative; padding-left: 20px;">Calendar sync</li>
+                            <li style="color: #6b7280; margin-bottom: 8px; list-style: none; position: relative; padding-left: 20px;">Guest communications</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #764ba215 0%, #764ba205 100%); padding: 40px; border-radius: 20px; border: 2px solid #764ba220; transition: all 0.3s;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; color: #764ba2; margin-bottom: 16px;">📈</div>
+                        <h3 style="font-size: 1.8rem; font-weight: bold; color: #1f2937; margin-bottom: 20px;">Analytics & Insights</h3>
+                        <ul style="padding: 0;">
+                            <li style="color: #6b7280; margin-bottom: 8px; list-style: none; position: relative; padding-left: 20px;">Revenue tracking</li>
+                            <li style="color: #6b7280; margin-bottom: 8px; list-style: none; position: relative; padding-left: 20px;">Performance metrics</li>
+                            <li style="color: #6b7280; margin-bottom: 8px; list-style: none; position: relative; padding-left: 20px;">Occupancy rates</li>
+                            <li style="color: #6b7280; margin-bottom: 8px; list-style: none; position: relative; padding-left: 20px;">Profit analysis</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #f093fb15 0%, #f093fb05 100%); padding: 40px; border-radius: 20px; border: 2px solid #f093fb20; transition: all 0.3s;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; color: #f093fb; margin-bottom: 16px;">⚡</div>
+                        <h3 style="font-size: 1.8rem; font-weight: bold; color: #1f2937; margin-bottom: 20px;">Automation Tools</h3>
+                        <ul style="padding: 0;">
+                            <li style="color: #6b7280; margin-bottom: 8px; list-style: none; position: relative; padding-left: 20px;">Smart scheduling</li>
+                            <li style="color: #6b7280; margin-bottom: 8px; list-style: none; position: relative; padding-left: 20px;">Auto-responses</li>
+                            <li style="color: #6b7280; margin-bottom: 8px; list-style: none; position: relative; padding-left: 20px;">Task management</li>
+                            <li style="color: #6b7280; margin-bottom: 8px; list-style: none; position: relative; padding-left: 20px;">Maintenance alerts</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta">
+        <div style="padding: 80px 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); text-align: center;">
+            <div style="max-width: 800px; margin: 0 auto;">
+                <h2 style="font-size: 2.5rem; font-weight: bold; color: white; margin-bottom: 16px; text-align: center;">Ready to transform your rental business?</h2>
+                <p style="font-size: 1.2rem; color: rgba(255,255,255,0.9); margin-bottom: 32px; text-align: center; max-width: 600px; margin-left: auto; margin-right: auto;">Join thousands of property managers who trust Rental Manager for their business success.</p>
+                <div style="text-align: center;">
+                    <a href="https://rental-manager.streamlit.app/" style="background: white; color: #667eea; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.1rem; margin-right: 16px; display: inline-block; transition: all 0.2s;">Get Started Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: #f9fafb; border-top: 1px solid #e5e7eb;">
+        <div style="padding: 40px 32px; max-width: 1200px; margin: 0 auto;">
+            <div style="display: flex; gap: 64px; flex-wrap: wrap;">
+                <div style="flex: 1;">
+                    <h4 style="font-size: 1.2rem; font-weight: bold; color: #1f2937; margin-bottom: 16px;">Rental Manager</h4>
+                    <p style="color: #6b7280; line-height: 1.6; max-width: 300px;">Smart rental management platform for modern property managers.</p>
+                </div>
+                <div style="flex: 1;">
+                    <h4 style="font-size: 1.1rem; font-weight: bold; color: #1f2937; margin-bottom: 16px;">Platform</h4>
+                    <div>
+                        <a href="https://rental-manager.streamlit.app/" style="color: #6b7280; text-decoration: none; display: block; margin-bottom: 8px;">Dashboard</a>
+                        <a href="https://rental-manager.streamlit.app/Analytics" style="color: #6b7280; text-decoration: none; display: block; margin-bottom: 8px;">Analytics</a>
+                        <a href="https://rental-manager.streamlit.app/Calendar" style="color: #6b7280; text-decoration: none; display: block; margin-bottom: 8px;">Calendar</a>
+                    </div>
+                </div>
+                <div style="flex: 1;">
+                    <h4 style="font-size: 1.1rem; font-weight: bold; color: #1f2937; margin-bottom: 16px;">Resources</h4>
+                    <div>
+                        <a href="#" style="color: #6b7280; text-decoration: none; display: block; margin-bottom: 8px;">Documentation</a>
+                        <a href="#" style="color: #6b7280; text-decoration: none; display: block; margin-bottom: 8px;">Support</a>
+                        <a href="https://github.com/kaljuvee/rental-manager" style="color: #6b7280; text-decoration: none; display: block; margin-bottom: 8px;">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 32px 0;">
+            <div style="text-align: center;">
+                <p style="color: #6b7280; margin: 0;">© 2025 Rental Manager. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
