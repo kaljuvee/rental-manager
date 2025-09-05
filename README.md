@@ -14,27 +14,35 @@ This project is a clone of the Rentster.eu rental management platform, built wit
 
 ## Setup and Installation
 
+### Quick Start
+
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/kaljuvee/rental-manager.git
+    cd rental-manager
+    ```
+
+2.  Install all dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
 ### Backend (Streamlit)
 
-1.  Install dependencies:
-    ```bash
-    pip install streamlit pandas
-    ```
-2.  Run the Streamlit application:
+1.  Run the Streamlit application:
     ```bash
     streamlit run streamlit_app/Home.py
     ```
+    Access at: http://localhost:8501
 
 ### Frontend (FastHTML)
 
-1.  Install dependencies:
+1.  Run the FastHTML application:
     ```bash
-    pip install fasthtml
-    ```
-2.  Run the FastHTML application:
-    ```bash
+    cd fasthtml_landing
     python app.py
     ```
+    Access at: http://localhost:5001
 
 ### Database
 
