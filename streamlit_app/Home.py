@@ -16,34 +16,18 @@ st.set_page_config(
     page_icon="🏢",
     layout="wide"
 )
-
-# Initialize session state
+# Check if user session exists, if not create a default user
 if 'user' not in st.session_state:
-    st.session_state.user = None
-
-def login_page():
-    """Display login page"""
-    st.title("🏢 Rental Manager")
-    st.subheader("Rental Management Platform")
-    
-    col1, col2, col3 = st.columns([1, 2, 1])
-    
-    with col2:
-        st.markdown("### Login to Your Account")
-        
-        with st.form("login_form"):
-            email = st.text_input("Email")
-            password = st.text_input("Password", type="password")
-            submit = st.form_submit_button("Login")
-            
-            if submit:
-                user = db.authenticate_user(email, password)
-                if user:
-                    st.session_state.user = user
-                    st.success("Login successful!")
-                    st.rerun()
-                else:
-                    st.error("Invalid email or password")
+    st.session_state.user = {
+        'id': 1,
+        'username': 'demo_user',
+        'email': 'demo@rentalmanager.com',
+        'role': 'business_owner',
+        'company_id': 1
+    }
+def main():
+    """Main application - directly show dashboard"""
+    dashboard_page()
         
         st.markdown("---")
         st.markdown("### Create New Account")
@@ -247,10 +231,7 @@ def customer_dashboard():
 
 # Main app logic
 def main():
-    if st.session_state.user is None:
-        login_page()
-    else:
-        dashboard()
+    dashboard()
 
 if __name__ == "__main__":
     main()
