@@ -5,11 +5,19 @@ import plotly.graph_objects as go
 from datetime import datetime, timedelta
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from database import Database
 
-# Initialize database
-db = Database()
+# Add the parent directory to the path to import database
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+
+try:
+    from database import Database
+    # Initialize database
+    db = Database()
+except ImportError:
+    # Fallback if database module is not available
+    db = None
 
 st.set_page_config(
     page_title="Provider Management - Rental Manager",

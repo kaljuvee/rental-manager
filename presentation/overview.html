@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform Overview</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: #ffffff;
+            margin: 0 auto;
+            padding: 60px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .architecture-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 60px 0;
+        }
+        
+        .component {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            width: 280px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .component-icon {
+            font-size: 48px;
+            color: #6366f1;
+            margin-bottom: 20px;
+        }
+        
+        .component-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+        
+        .component-desc {
+            font-size: 16px;
+            color: #374151;
+            line-height: 1.5;
+        }
+        
+        .arrow {
+            font-size: 32px;
+            color: #6366f1;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+        
+        .feature-icon {
+            font-size: 24px;
+            color: #6366f1;
+            margin-right: 15px;
+            width: 40px;
+        }
+        
+        .feature-text {
+            font-size: 16px;
+            color: #374151;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <h1 class="title">Platform Overview</h1>
+        
+        <div class="architecture-flow">
+            <div class="component">
+                <div class="component-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div class="component-title">FastHTML Frontend</div>
+                <div class="component-desc">Modern landing page with responsive design and user authentication</div>
+            </div>
+            
+            <div class="arrow">
+                <i class="fas fa-arrow-right"></i>
+            </div>
+            
+            <div class="component">
+                <div class="component-icon">
+                    <i class="fas fa-server"></i>
+                </div>
+                <div class="component-title">Streamlit Backend</div>
+                <div class="component-desc">Full-featured dashboard with analytics, calendar, and management tools</div>
+            </div>
+            
+            <div class="arrow">
+                <i class="fas fa-arrow-right"></i>
+            </div>
+            
+            <div class="component">
+                <div class="component-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div class="component-title">SQLite Database</div>
+                <div class="component-desc">Lightweight, reliable data storage with comprehensive schema</div>
+            </div>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="feature-text">Synchronized calendar integration</div>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <div class="feature-text">Integrated payment processing</div>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-signature"></i>
+                </div>
+                <div class="feature-text">Digital signature capabilities</div>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="feature-text">Real-time analytics and reporting</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

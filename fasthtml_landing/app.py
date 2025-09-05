@@ -1,5 +1,11 @@
 from fasthtml.common import *
 
+# Create FastHTML app
+app, rt = fast_app()
+
+# Streamlit backend URL
+STREAMLIT_URL = "https://rental-manager.streamlit.app"
+
 # CSS styles
 css = Style("""
     * {
@@ -252,8 +258,8 @@ def get():
                     cls="nav-links"
                 ),
                 Div(
-                    A("Login", href="#", cls="btn btn-outline"),
-                    A("Sign Up", href="#", cls="btn btn-primary"),
+                A("Login", href=f"{STREAMLIT_URL}", target="_blank", cls="btn"),
+                A("Sign Up", href=f"{STREAMLIT_URL}", target="_blank", cls="btn btn-primary"),
                     cls="auth-buttons"
                 ),
                 cls="nav"
@@ -264,7 +270,7 @@ def get():
             Div(
                 H1("Rental Management Platform"),
                 P("Comprehensive rental management solution with digital calendar, order processing, digital signatures, online payments, and contactless rental capabilities."),
-                A("Get Started", href="#", cls="btn btn-primary", style="font-size: 1.1rem; padding: 1rem 2rem;"),
+                A("Get Started", href=f"{STREAMLIT_URL}", target="_blank", cls="btn btn-primary", style="font-size: 1.1rem; padding: 1rem 2rem;"),
                 cls="hero-content"
             ),
             cls="hero"

@@ -1,22 +1,25 @@
 import streamlit as st
 import pandas as pd
-from datetime import datetime, date
-from database import RentsterDB
+import plotly.express as px
+import plotly.graph_objects as go
+from datetime import datetime, timedelta
+import os
 
-# Initialize database
-@st.cache_resource
-def init_database():
-    return RentsterDB()
+# Try to import database, fallback if not available
+try:
+    from database import Database
+    db = Database()
+except ImportError:
+    db = None
 
-db = init_database()
-
-# Page configuration
 st.set_page_config(
-    page_title="Rental Manager - Rental Platform",
-    page_icon="🏢",
-    layout="wide"
+    page_title="Rental Manager",
+    page_icon="🏠",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
-# Check if user session exists, if not create a default user
+
+# Initialize session state
 if 'user' not in st.session_state:
     st.session_state.user = {
         'id': 1,
@@ -25,213 +28,192 @@ if 'user' not in st.session_state:
         'role': 'business_owner',
         'company_id': 1
     }
-def main():
-    """Main application - directly show dashboard"""
-    dashboard_page()
-        
-        st.markdown("---")
-        st.markdown("### Create New Account")
-        
-        with st.form("register_form"):
-            reg_username = st.text_input("Username")
-            reg_email = st.text_input("Email Address")
-            reg_password = st.text_input("Password", type="password")
-            reg_role = st.selectbox("Role", ["customer", "business_owner"])
-            register = st.form_submit_button("Register")
-            
-            if register:
-                if reg_username and reg_email and reg_password:
-                    user_id = db.create_user(reg_username, reg_email, reg_password, reg_role)
-                    if user_id:
-                        st.success("Account created successfully! Please login.")
-                    else:
-                        st.error("Username or email already exists")
-                else:
-                    st.error("Please fill in all fields")
 
-def dashboard():
-    """Main dashboard"""
+def dashboard_page():
+    """Main dashboard page"""
     st.title(f"Welcome, {st.session_state.user['username']}!")
     
     # Sidebar
     with st.sidebar:
         st.markdown(f"**Role:** {st.session_state.user['role'].title()}")
-        if st.button("Logout"):
-            st.session_state.user = None
-            st.rerun()
-    
-    # Main content based on role
-    if st.session_state.user['role'] == 'business_owner':
-        business_dashboard()
-    else:
-        customer_dashboard()
+        st.markdown("---")
+        
+        # Quick stats
+        st.subheader("Quick Stats")
+        st.metric("Active Items", "24")
+        st.metric("Total Bookings", "156")
+        st.metric("Monthly Revenue", "€2,450")
+        
+        st.markdown("---")
+        
+        # Quick actions
+        st.subheader("Quick Actions")
+        if st.button("➕ Add New Item"):
+            st.info("Navigate to Provider Management to add items")
+        if st.button("📊 View Analytics"):
+            st.info("Check the Analytics page for detailed insights")
+        if st.button("📅 Check Calendar"):
+            st.info("Visit the Calendar page for bookings")
 
-def business_dashboard():
-    """Dashboard for business owners"""
-    st.subheader("Business Dashboard")
+    # Main content area
+    col1, col2, col3, col4 = st.columns(4)
     
-    tab1, tab2, tab3, tab4 = st.tabs(["📊 Overview", "📦 Rental Items", "📅 Bookings", "⚙️ Settings"])
+    with col1:
+        st.metric(
+            label="Total Revenue",
+            value="€12,450",
+            delta="12.5%"
+        )
     
-    with tab1:
-        # Overview metrics
-        col1, col2, col3, col4 = st.columns(4)
+    with col2:
+        st.metric(
+            label="Active Bookings",
+            value="23",
+            delta="3"
+        )
+    
+    with col3:
+        st.metric(
+            label="Total Items",
+            value="45",
+            delta="2"
+        )
+    
+    with col4:
+        st.metric(
+            label="Customer Rating",
+            value="4.8/5",
+            delta="0.1"
+        )
+
+    # Charts section
+    st.markdown("---")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.subheader("Revenue Trend")
         
-        with col1:
-            st.metric("Total Items", "12", "2")
-        with col2:
-            st.metric("Active Bookings", "8", "1")
-        with col3:
-            st.metric("Monthly Revenue", "€1,450", "€320")
-        with col4:
-            st.metric("Customer Satisfaction", "4.8/5", "0.2")
-        
-        # Revenue chart
-        st.subheader("Revenue Overview")
-        chart_data = pd.DataFrame({
-            'Month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            'Revenue': [1200, 1350, 1100, 1450, 1600, 1450]
+        # Sample revenue data
+        dates = pd.date_range(start='2025-01-01', end='2025-09-05', freq='D')
+        revenue_data = pd.DataFrame({
+            'date': dates,
+            'revenue': [100 + i * 2 + (i % 7) * 50 for i in range(len(dates))]
         })
-        st.line_chart(chart_data.set_index('Month'))
+        
+        fig_revenue = px.line(
+            revenue_data, 
+            x='date', 
+            y='revenue',
+            title="Daily Revenue"
+        )
+        fig_revenue.update_layout(height=400)
+        st.plotly_chart(fig_revenue, use_container_width=True)
     
-    with tab2:
-        st.subheader("Manage Rental Items")
+    with col2:
+        st.subheader("Booking Status")
         
-        # Add new item form
-        with st.expander("Add New Rental Item"):
-            with st.form("add_item_form"):
-                item_name = st.text_input("Item Name")
-                item_description = st.text_area("Description")
-                item_category = st.selectbox("Category", ["Electronics", "Tools", "Vehicles", "Equipment", "Other"])
-                price_per_day = st.number_input("Price per Day (€)", min_value=0.0, step=0.01)
-                submit_item = st.form_submit_button("Add Item")
-                
-                if submit_item and item_name and price_per_day > 0:
-                    st.success(f"Item '{item_name}' added successfully!")
+        # Sample booking status data
+        status_data = {
+            'Status': ['Confirmed', 'Pending', 'Completed', 'Cancelled'],
+            'Count': [45, 12, 89, 5]
+        }
         
-        # Display existing items
-        items = db.get_rental_items(st.session_state.user.get('company_id'))
-        if items:
-            items_df = pd.DataFrame(items, columns=[
-                'ID', 'Name', 'Description', 'Category', 'Company ID', 'Location ID',
-                'Status', 'Price/Day', 'Image URL', 'Created', 'Company', 'Location'
-            ])
-            st.dataframe(items_df[['Name', 'Category', 'Status', 'Price/Day']], use_container_width=True)
-        else:
-            st.info("No rental items found. Add your first item above!")
-    
-    with tab3:
-        st.subheader("Booking Management")
-        
-        bookings = db.get_bookings(company_id=st.session_state.user.get('company_id'))
-        if bookings:
-            bookings_df = pd.DataFrame(bookings, columns=[
-                'Booking ID', 'Item ID', 'User ID', 'Start Date', 'End Date',
-                'Total Price', 'Status', 'Created', 'Item Name', 'Username'
-            ])
-            st.dataframe(bookings_df[['Item Name', 'Username', 'Start Date', 'End Date', 'Total Price', 'Status']], 
-                        use_container_width=True)
-        else:
-            st.info("No bookings found.")
-    
-    with tab4:
-        st.subheader("Business Settings")
-        
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            st.markdown("#### Company Information")
-            st.text_input("Company Name", value="Sample Company")
-            st.text_input("Registration Code", value="12345678")
-            st.text_input("Phone", value="+372 123 4567")
-            st.text_area("Address", value="Sample Address")
-        
-        with col2:
-            st.markdown("#### Subscription Plan")
-            st.info("Current Plan: Business (€59/month)")
-            st.markdown("- Max 10 Users")
-            st.markdown("- Max 5 Locations")
-            st.markdown("- 0% Transaction Fee")
-            st.button("Upgrade Plan")
+        fig_status = px.pie(
+            values=status_data['Count'],
+            names=status_data['Status'],
+            title="Booking Distribution"
+        )
+        fig_status.update_layout(height=400)
+        st.plotly_chart(fig_status, use_container_width=True)
 
-def customer_dashboard():
-    """Dashboard for customers"""
-    st.subheader("Customer Dashboard")
+    # Recent activity
+    st.markdown("---")
+    st.subheader("Recent Activity")
     
-    tab1, tab2, tab3 = st.tabs(["🔍 Browse Items", "📅 My Bookings", "👤 Profile"])
+    activity_data = {
+        'Time': ['2 hours ago', '5 hours ago', '1 day ago', '2 days ago', '3 days ago'],
+        'Activity': [
+            'New booking: Professional Camera',
+            'Payment received: €125',
+            'Item added: Power Drill',
+            'Booking completed: Mountain Bike',
+            'Customer review: 5 stars'
+        ],
+        'Type': ['Booking', 'Payment', 'Item', 'Booking', 'Review']
+    }
     
-    with tab1:
-        st.subheader("Available Rental Items")
+    activity_df = pd.DataFrame(activity_data)
+    
+    for idx, row in activity_df.iterrows():
+        col1, col2, col3 = st.columns([2, 4, 1])
         
-        # Filters
-        col1, col2, col3 = st.columns(3)
         with col1:
-            category_filter = st.selectbox("Category", ["All", "Electronics", "Tools", "Vehicles", "Equipment"])
+            st.write(row['Time'])
+        
         with col2:
-            max_price = st.number_input("Max Price per Day (€)", min_value=0, value=100)
+            # Add emoji based on type
+            emoji = {
+                'Booking': '📅',
+                'Payment': '💰',
+                'Item': '📦',
+                'Review': '⭐'
+            }.get(row['Type'], '📋')
+            
+            st.write(f"{emoji} {row['Activity']}")
+        
         with col3:
-            availability = st.selectbox("Availability", ["Available", "All"])
-        
-        # Sample items (in real app, this would come from database)
-        sample_items = [
-            {"name": "Professional Camera", "category": "Electronics", "price": 25.0, "status": "available"},
-            {"name": "Power Drill", "category": "Tools", "price": 15.0, "status": "available"},
-            {"name": "Mountain Bike", "category": "Vehicles", "price": 20.0, "status": "rented"},
-            {"name": "Projector", "category": "Electronics", "price": 30.0, "status": "available"},
-        ]
-        
-        for item in sample_items:
-            if (category_filter == "All" or item["category"] == category_filter) and \
-               item["price"] <= max_price and \
-               (availability == "All" or item["status"] == "available"):
-                
-                with st.container():
-                    col1, col2, col3, col4 = st.columns([3, 1, 1, 1])
-                    with col1:
-                        st.write(f"**{item['name']}**")
-                        st.write(f"Category: {item['category']}")
-                    with col2:
-                        st.write(f"€{item['price']}/day")
-                    with col3:
-                        status_color = "🟢" if item['status'] == 'available' else "🔴"
-                        st.write(f"{status_color} {item['status'].title()}")
-                    with col4:
-                        if item['status'] == 'available':
-                            if st.button(f"Book", key=f"book_{item['name']}"):
-                                st.success(f"Booking request sent for {item['name']}")
-                    st.divider()
-    
-    with tab2:
-        st.subheader("My Bookings")
-        
-        bookings = db.get_bookings(user_id=st.session_state.user['user_id'])
-        if bookings:
-            bookings_df = pd.DataFrame(bookings, columns=[
-                'Booking ID', 'Item ID', 'User ID', 'Start Date', 'End Date',
-                'Total Price', 'Status', 'Created', 'Item Name', 'Username'
-            ])
-            st.dataframe(bookings_df[['Item Name', 'Start Date', 'End Date', 'Total Price', 'Status']], 
-                        use_container_width=True)
-        else:
-            st.info("No bookings found. Browse items to make your first booking!")
-    
-    with tab3:
-        st.subheader("Profile Settings")
-        
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            st.text_input("Username", value=st.session_state.user['username'])
-            st.text_input("Email", value=st.session_state.user['email'])
-        
-        with col2:
-            st.markdown("#### Account Statistics")
-            st.metric("Total Bookings", "3")
-            st.metric("Total Spent", "€245")
-            st.metric("Member Since", "2024")
+            type_color = {
+                'Booking': '🟢',
+                'Payment': '🟡',
+                'Item': '🔵',
+                'Review': '🟣'
+            }.get(row['Type'], '⚪')
+            
+            st.write(type_color)
 
-# Main app logic
+    # Performance overview
+    st.markdown("---")
+    st.subheader("Performance Overview")
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("#### This Month")
+        st.metric("Bookings", "67", "+15%")
+        st.metric("Revenue", "€3,240", "+22%")
+        st.metric("New Customers", "12", "+8%")
+    
+    with col2:
+        st.markdown("#### Top Items")
+        top_items = pd.DataFrame({
+            'Item': ['Professional Camera', 'Power Drill', 'Mountain Bike', 'Projector'],
+            'Bookings': [23, 18, 15, 12],
+            'Revenue': ['€1,150', '€720', '€900', '€480']
+        })
+        st.dataframe(top_items, use_container_width=True)
+    
+    with col3:
+        st.markdown("#### Customer Satisfaction")
+        st.metric("Average Rating", "4.8/5", "+0.2")
+        st.metric("Response Time", "2.3 hours", "-0.5h")
+        st.metric("Completion Rate", "96%", "+2%")
+
+    # Footer
+    st.markdown("---")
+    st.markdown(
+        """
+        <div style='text-align: center; color: #666; padding: 20px;'>
+            <p><strong>Rental Manager</strong> - Professional Rental Management Platform</p>
+            <p>Streamlit Backend • FastHTML Frontend • SQLite Database</p>
+        </div>
+        """, 
+        unsafe_allow_html=True
+    )
+
 def main():
-    dashboard()
+    """Main application entry point"""
+    dashboard_page()
 
 if __name__ == "__main__":
     main()

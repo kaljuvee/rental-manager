@@ -70,6 +70,10 @@ if view_type == "Month":
     
     # Get calendar data
     cal = calendar.monthcalendar(year, month)
+    
+    # Convert date column to datetime for filtering
+    bookings_df['date'] = pd.to_datetime(bookings_df['date'])
+    
     month_bookings = bookings_df[
         (bookings_df['date'].dt.year == year) & 
         (bookings_df['date'].dt.month == month)
@@ -91,7 +95,7 @@ if view_type == "Month":
                 cols[i].markdown("")
             else:
                 day_date = date(year, month, day)
-                day_bookings = month_bookings[month_bookings['date'] == day_date]
+                day_bookings = month_bookings[month_bookings['date'].dt.date == day_date]
                 
                 with cols[i]:
                     # Highlight today
@@ -118,14 +122,14 @@ elif view_type == "Week":
     
     # Filter bookings for this week
     week_bookings = bookings_df[
-        (bookings_df['date'] >= week_start) & 
-        (bookings_df['date'] < week_start + timedelta(days=7))
+        (bookings_df['date'].dt.date >= week_start) & 
+        (bookings_df['date'].dt.date < week_start + timedelta(days=7))
     ]
     
     # Create week view
     cols = st.columns(7)
     for i, day_date in enumerate(week_dates):
-        day_bookings = week_bookings[week_bookings['date'] == day_date]
+        day_bookings = week_bookings[week_bookings['date'].dt.date == day_date]
         
         with cols[i]:
             # Highlight today
@@ -146,7 +150,7 @@ else:  # Day view
     st.subheader(f"Day View - {selected_date.strftime('%A, %B %d, %Y')}")
     
     # Filter bookings for selected day
-    day_bookings = bookings_df[bookings_df['date'] == selected_date]
+    day_bookings = bookings_df[bookings_df['date'].dt.date == selected_date]
     
     if len(day_bookings) > 0:
         # Create timeline view
@@ -221,7 +225,7 @@ st.markdown("---")
 st.subheader("Upcoming Bookings")
 
 upcoming_bookings = bookings_df[
-    (bookings_df['date'] >= datetime.now().date()) & 
+    (bookings_df['date'].dt.date >= datetime.now().date()) & 
     (bookings_df['status'].isin(['confirmed', 'pending']))
 ].head(10)
 

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastHTML Landing Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: #ffffff;
+            margin: 0 auto;
+            padding: 60px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .content-layout {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+        
+        .screenshot-section {
+            flex: 2;
+        }
+        
+        .screenshot {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .features-section {
+            flex: 1;
+            padding-left: 20px;
+        }
+        
+        .section-subtitle {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8fafc;
+            border-radius: 6px;
+        }
+        
+        .feature-check {
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        
+        .feature-text {
+            font-size: 16px;
+            color: #374151;
+        }
+        
+        .tech-stack {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f3f4f6;
+            border-radius: 8px;
+        }
+        
+        .tech-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+        
+        .tech-item {
+            display: inline-block;
+            background: #6366f1;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <h1 class="title">FastHTML Landing Page</h1>
+        
+        <div class="content-layout">
+            <div class="screenshot-section">
+                <img src="/home/ubuntu/rentster_clone/landing_page_demo.png" alt="FastHTML Landing Page" class="screenshot">
+            </div>
+            
+            <div class="features-section">
+                <h2 class="section-subtitle">Key Features</h2>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span class="feature-text">Modern gradient design</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span class="feature-text">Responsive navigation</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span class="feature-text">Clear value proposition</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span class="feature-text">Direct Streamlit integration</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span class="feature-text">Professional branding</span>
+                    </li>
+                    <li class="feature-item">
+                        <span class="feature-check">✓</span>
+                        <span class="feature-text">Mobile-optimized</span>
+                    </li>
+                </ul>
+                
+                <div class="tech-stack">
+                    <div class="tech-title">Technology Stack</div>
+                    <span class="tech-item">FastHTML</span>
+                    <span class="tech-item">Python</span>
+                    <span class="tech-item">CSS3</span>
+                    <span class="tech-item">Responsive</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

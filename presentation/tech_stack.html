@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technology Stack</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background: #ffffff;
+            margin: 0 auto;
+            padding: 60px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .architecture-container {
+            width: 100%;
+            height: 400px;
+            margin-bottom: 40px;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .tech-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tech-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .tech-icon {
+            width: 50px;
+            height: 50px;
+            background: #6366f1;
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+        }
+        
+        .tech-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1f2937;
+        }
+        
+        .tech-features {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .tech-feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .feature-bullet {
+            color: #6366f1;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        
+        .feature-text {
+            font-size: 16px;
+            color: #374151;
+            line-height: 1.5;
+        }
+        
+        .node {
+            fill: #6366f1;
+        }
+        
+        .link {
+            stroke: #6366f1;
+            stroke-width: 2px;
+        }
+        
+        .node-label {
+            font-size: 14px;
+            font-weight: bold;
+            text-anchor: middle;
+            fill: white;
+        }
+        
+        .link-label {
+            font-size: 12px;
+            text-anchor: middle;
+            fill: #4b5563;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <h1 class="title">Technology Stack</h1>
+        
+        <div class="architecture-container" id="architecture-diagram"></div>
+        
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-header">
+                    <div class="tech-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="tech-title">FastHTML Frontend</div>
+                </div>
+                <ul class="tech-features">
+                    <li class="tech-feature">
+                        <span class="feature-bullet">•</span>
+                        <span class="feature-text">Python-based HTML generation</span>
+                    </li>
+                    <li class="tech-feature">
+                        <span class="feature-bullet">•</span>
+                        <span class="feature-text">Responsive design with modern CSS</span>
+                    </li>
+                    <li class="tech-feature">
+                        <span class="feature-bullet">•</span>
+                        <span class="feature-text">Seamless Streamlit integration</span>
+                    </li>
+                    <li class="tech-feature">
+                        <span class="feature-bullet">•</span>
+                        <span class="feature-text">Fast rendering performance</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="tech-card">
+                <div class="tech-header">
+                    <div class="tech-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="tech-title">Streamlit Backend</div>
+                </div>
+                <ul class="tech-features">
+                    <li class="tech-feature">
+                        <span class="feature-bullet">•</span>
+                        <span class="feature-text">Python-based web application framework</span>
+                    </li>
+                    <li class="tech-feature">
+                        <span class="feature-bullet">•</span>
+                        <span class="feature-text">Interactive data visualization</span>
+                    </li>
+                    <li class="tech-feature">
+                        <span class="feature-bullet">•</span>
+                        <span class="feature-text">Session state management</span>
+                    </li>
+                    <li class="tech-feature">
+                        <span class="feature-bullet">•</span>
+                        <span class="feature-text">Multi-page application support</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="tech-card">
+                <div class="tech-header">
+                    <div class="tech-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="tech-title">SQLite Database</div>
+                </div>
+                <ul class="tech-features">
+                    <li class="tech-feature">
+                        <span class="feature-bullet">•</span>
+                        <span class="feature-text">Lightweight, serverless database</span>
+                    </li>
+                    <li class="tech-feature">
+                        <span class="feature-bullet">•</span>
+                        <span class="feature-text">Comprehensive data model with 9 tables</span>
+                    </li>
+                    <li class="tech-feature">
+                        <span class="feature-bullet">•</span>
+                        <span class="feature-text">ACID-compliant transactions</span>
+                    </li>
+                    <li class="tech-feature">
+                        <span class="feature-bullet">•</span>
+                        <span class="feature-text">Zero configuration required</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Create architecture diagram
+        document.addEventListener('DOMContentLoaded', function() {
+            const width = document.getElementById('architecture-diagram').clientWidth;
+            const height = 400;
+            
+            const svg = d3.select('#architecture-diagram')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+            
+            // Define nodes
+            const nodes = [
+                { id: 'user', label: 'User', x: width * 0.1, y: height * 0.5, radius: 40 },
+                { id: 'fasthtml', label: 'FastHTML', x: width * 0.3, y: height * 0.3, radius: 50 },
+                { id: 'streamlit', label: 'Streamlit', x: width * 0.6, y: height * 0.5, radius: 50 },
+                { id: 'sqlite', label: 'SQLite', x: width * 0.85, y: height * 0.5, radius: 50 }
+            ];
+            
+            // Define links
+            const links = [
+                { source: 'user', target: 'fasthtml', label: 'HTTP Request' },
+                { source: 'fasthtml', target: 'streamlit', label: 'API Integration' },
+                { source: 'streamlit', target: 'sqlite', label: 'CRUD Operations' }
+            ];
+            
+            // Create links
+            svg.selectAll('.link')
+                .data(links)
+                .enter()
+                .append('path')
+                .attr('class', 'link')
+                .attr('d', function(d) {
+                    const source = nodes.find(node => node.id === d.source);
+                    const target = nodes.find(node => node.id === d.target);
+                    
+                    // Create curved paths
+                    return `M${source.x},${source.y} Q${(source.x + target.x) / 2},${(source.y + target.y) / 2 - 50} ${target.x},${target.y}`;
+                })
+                .attr('fill', 'none')
+                .attr('marker-end', 'url(#arrowhead)');
+            
+            // Add arrowhead marker
+            svg.append('defs').append('marker')
+                .attr('id', 'arrowhead')
+                .attr('viewBox', '0 -5 10 10')
+                .attr('refX', 8)
+                .attr('refY', 0)
+                .attr('markerWidth', 6)
+                .attr('markerHeight', 6)
+                .attr('orient', 'auto')
+                .append('path')
+                .attr('d', 'M0,-5L10,0L0,5')
+                .attr('fill', '#6366f1');
+            
+            // Create nodes
+            const nodeGroups = svg.selectAll('.node')
+                .data(nodes)
+                .enter()
+                .append('g');
+            
+            nodeGroups.append('circle')
+                .attr('class', 'node')
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y)
+                .attr('r', d => d.radius);
+            
+            nodeGroups.append('text')
+                .attr('class', 'node-label')
+                .attr('x', d => d.x)
+                .attr('y', d => d.y + 5)
+                .text(d => d.label);
+            
+            // Add link labels
+            svg.selectAll('.link-label')
+                .data(links)
+                .enter()
+                .append('text')
+                .attr('class', 'link-label')
+                .attr('x', function(d) {
+                    const source = nodes.find(node => node.id === d.source);
+                    const target = nodes.find(node => node.id === d.target);
+                    return (source.x + target.x) / 2;
+                })
+                .attr('y', function(d) {
+                    const source = nodes.find(node => node.id === d.source);
+                    const target = nodes.find(node => node.id === d.target);
+                    return (source.y + target.y) / 2 - 30;
+                })
+                .text(d => d.label);
+            
+            // Add icons to nodes
+            const icons = {
+                'user': '\uf007', // user icon
+                'fasthtml': '\uf121', // code icon
+                'streamlit': '\uf233', // server icon
+                'sqlite': '\uf1c0'  // database icon
+            };
+            
+            nodeGroups.append('text')
+                .attr('class', 'fa')
+                .attr('x', d => d.x)
+                .attr('y', d => d.y - 5)
+                .attr('font-family', 'FontAwesome')
+                .attr('font-size', '20px')
+                .attr('fill', 'white')
+                .attr('text-anchor', 'middle')
+                .text(d => icons[d.id]);
+        });
+    </script>
+</body>
+</html>
+
